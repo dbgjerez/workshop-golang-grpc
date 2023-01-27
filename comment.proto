@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+message Comment {
+    int64 idComment = 1;
+    int32 idObject = 2;
+    string typeObject = 3;
+    string idUser = 4;
+    string comment = 6;
+}

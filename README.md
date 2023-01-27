@@ -3,6 +3,8 @@
 
 # Installation
 
+## protoc
+
 **Download the binary to a temporal directory**
 
 ```bash
@@ -28,3 +30,11 @@ mv /tmp/protoc/bin/protoc /usr/local/bin/protoc
 protoc --version
 libprotoc 3.21.12
 ```
+
+## protoc-gen-go
+
+```zsh
+go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.26
+```
+
+> NOTE: if you can execute ```protoc-gen-go``` you have to add it to your PATH: ```export GO_PATH=~/go``` and ```export PATH=$PATH:/$GO_PATH/bin```
