@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option go_package = "./domain";
+
+message Comment {
+    int64 idComment = 1;
+    int32 idObject = 2;
+    string typeObject = 3;
+    int32 idUser = 4;
+    string comment = 6;
+}
+
+service CommentService {
+    rpc Insert(Comment) returns (InsertResponse) {}
+    rpc Retrieve(RetrieveRequest) returns (Comments) {}
+}
+
+message InsertResponse {
+    int32 idComment = 1;
+}
+
+message RetrieveRequest {
+    int32 idObject = 1;
+    string typeObject = 2;
+}
+
+message Comments {
+    repeated Comment commets = 1;
+}
