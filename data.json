@@ -1,0 +1,14 @@
+[
+    {
+        "idComment": 1,
+        "idObject": 12,
+        "typeObject": "film",
+        "idUser": 20
+    },
+    {
+        "idComment": 2,
+        "idObject": 12,
+        "typeObject": "film",
+        "idUser": 20
+    }
+]
