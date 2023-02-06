@@ -25,5 +25,5 @@ message RetrieveRequest {
 }
 
 message Comments {
-    repeated Comment commets = 1;
+    repeated Comment comments = 1;
 }

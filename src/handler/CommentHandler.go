@@ -13,5 +13,5 @@ type Server struct {
 
 func (s *Server) Retrieve(context.Context, *domain.RetrieveRequest) (*domain.Comments, error) {
 	comments, err := store.ReadStore()
-	return &domain.Comments{Commets: comments}, err
+	return &domain.Comments{Comments: comments}, err
 }
