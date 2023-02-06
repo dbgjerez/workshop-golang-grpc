@@ -55,7 +55,7 @@ protoc src/domain/*.proto \
     --go-grpc_opt=paths=source_relative
 ```
 
-> NOTE: It's very important to install the preferred language plugin, in the step before I installed ```protoc-gen-go```, but you can install another.
+> NOTE: I've installed the ```protoc-gen-go``` plugin, which allow to auto-generate golang code. If you prefer, you can install it for another language.
 
 After the plugin execution, we can inspect our code inside the ```src/domain``` folder.
 
