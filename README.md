@@ -42,11 +42,11 @@ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 
 # Generate protobufs
 
-An important adventage to use protobufs is the capacity to auto-generate the code in your prefered language, // fixme (incluso) in differents language. 
+An important advantage of using protobufs is the capacity to auto-generate the code in your preferred language, // fixme (incluso) in different languages. 
 
 In this example, we're going to create a ```.proto``` file with the definition of the entity Comment. 
 
-Once we've created the file, we'll create the source code. In this case, I have choose the golang plugin.
+Once we've created the file, we'll create the source code. In this case, I have chosen the golang plugin.
 
 ```zsh
 protoc src/domain/*.proto \
@@ -56,9 +56,9 @@ protoc src/domain/*.proto \
     --go-grpc_opt=paths=source_relative
 ```
 
-> NOTE: It's very important to install the prefered languagge plugin, in the step before I installed ```protoc-gen-go``` but you can install another.
+> NOTE: It's very important to install the preferred language plugin, in the step before I installed ```protoc-gen-go```, but you can install another.
 
-After the plugin execution we can inspect our code inside the ```src/domain``` folder.
+After the plugin execution, we can inspect our code inside the ```src/domain``` folder.
 
 # Create a project
 
@@ -70,7 +70,7 @@ We are going to create a project, called comment, to use our gRPC server:
 go mod init comment
 ```
 
-It's important to donwload the dependencies that we need:
+It's important to download the dependencies that we need:
 
 ```bash
 go mod tidy
@@ -80,37 +80,37 @@ go get google.golang.org/grpc/reflection
 
 Once, we have our project we're going to create a ```main.go``` file and implement our server. 
 
-The main file contains some important points. The first one is the struct to override the auto-generated code. This struct have been called sever and looks like that: 
+The main file contains some important points. The first one is the struct to override the auto-generated code. This struct has been called sever and looks like that: 
 
 ```go
 type server struct {
-	domain.UnimplementedCommentServiceServer
+    domain.UnimplementedCommentServiceServer
 }
 ```
 
-As we can see, the struct use the unimplemented struct. Now, we are going to create the server in the main function, registering the server struct:
+As we can see, the struct uses the unimplemented struct. Now, we are going to create the server in the main function, registering the server struct:
 
 ```go
 func main() {
-	flag.Parse()
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
-	}
-	s := grpc.NewServer()
-	domain.RegisterCommentServiceServer(s, &server{})
-	reflection.Register(s)
-	if err := s.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
-	}
+    flag.Parse()
+    lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
+    if err != nil {
+        log.Fatalf("failed to listen: %v", err)
+    }
+    s := grpc.NewServer()
+    domain.RegisterCommentServiceServer(s, &server{})
+    reflection.Register(s)
+    if err := s.Serve(lis); err != nil {
+        log.Fatalf("failed to serve: %v", err)
+    }
 }
 ```
 
-Our main function implements some aspects. We see how listen a port, this port will be used by our application. Later, a new grpc server is started and the comment service is registered. 
+Our main function implements some aspects. We see how to listen to a port, this port will be used by our application. Later, a new grpc server is started and the comment service is registered. 
 
-The line with ```reflection.Register(s)``` enables the possibility to call for know how functions and endpoints exposes our application. We will see it later. 
+The line with ```reflection.Register(s)``` enables the possibility to call for know the different functions and endpoints exposes our application. We will see it later. 
 
-The last part start the server and return an error it isn't possible. 
+The last part starts the server and returns an error it isn't possible. 
 
 # Play with the application
 
@@ -120,7 +120,7 @@ Now, we can start our application and test it:
 go run main.go
 ```
 
-To test the application, we can use the ```grpcurl``` tool. For example, I'm going to list the differents endpoints with the following command:
+To test the application, we can use the ```grpcurl``` tool. For example, I'm going to list the different endpoints with the following command:
 
 ```bash
 grpcurl -plaintext localhost:50051 list  
@@ -128,11 +128,11 @@ CommentService
 grpc.reflection.v1alpha.ServerReflection
 ```
 
-> NOTE: change the port 50051 for your own application port. 
+> NOTE: change port 50051 for your application port. 
 
-Our application responses with the differents endpoints, the first one is for our CommentService and the second one is the Reflection API.
+Our application responds in different endpoints, the first one is for our CommentService and the second one is the Reflection API.
 
-If we continue calling we can see the different methods that contains our endpoint:
+If we continue calling we can see the different methods that contain our endpoint:
 
 ```bash
 grpcurl -plaintext localhost:50051 list CommentService                             
@@ -140,7 +140,7 @@ CommentService.Insert
 CommentService.Retrieve
 ```
 
-We've received two methods, also the same that we defined into de ```comment.proto``` file. So, it looks good. Now, I'll call the insert method:
+We've received two methods, also the same that we defined in de ```comment.proto``` file. So, it looks good. Now, I'll call the insert method:
 
 ```bash
 grpcurl -plaintext localhost:50051 CommentService.Insert 
@@ -149,30 +149,30 @@ ERROR:
   Message: method Insert not implemented
 ```
 
-Yeah, our application is responding, so it runs ok but we've received a error code. This error is because we have not implemented the different methods as we have used the auto generated code, and we only have defined a empty struct for our server.
+Yeah, our application is responding, so it runs ok but we've received an error code. This error is because we have not implemented the different methods as we have used the auto-generated code, and we only have defined an empty struct for our server.
 
 # Implement the server code
-Now, we can implement our own business logic applicacion, which will depend each case. For this example, I'm only going to return a list of comments, but you can use whatever you want in your application.
+Now, we can implement the business logic application, which will depend on each case. For this example, I'm only going to return a list of comments, but you can use whatever you want in your application.
 
 As we defined the server struct, we only have to define the Retrieve method:
 
 ```go
 func (s *server) Retrieve(context.Context, *domain.RetrieveRequest) (*domain.Comments, error) {
-	return &domain.Comments{
-		Commets: []*domain.Comment{
-			&domain.Comment{
-				IdComment:  1,
-				IdObject:   12,
-				TypeObject: "film",
-				IdUser:     20,
-				Comment:    "",
-			},
-		},
-	}, nil
+    return &domain.Comments{
+        Commets: []*domain.Comment{
+            &domain.Comment{
+                IdComment:  1,
+                IdObject:   12,
+                TypeObject: "film",
+                IdUser:     20,
+                Comment:    "",
+            },
+        },
+    }, nil
 }
 ```
 
-Now, we run again the application and test it calling the Retrieve endpoint:
+Now, we run the application again and test it by calling the Retrieve endpoint:
 
 ```bash
 grpcurl -plaintext localhost:50051 CommentService.Retrieve
@@ -188,7 +188,7 @@ grpcurl -plaintext localhost:50051 CommentService.Retrieve
 }
 ```
 
-And now, we can see how the application responses with the comment that we return.
+And now, we can see how the application responds to the comment that we return.
 
 # Create a client
 
