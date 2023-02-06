@@ -10,7 +10,7 @@
 curl -L https://github.com/protocolbuffers/protobuf/releases/download/v21.12/protoc-21.12-linux-x86_64.zip -o /tmp/protoc.zip
 ```
 
-> NOTE: We'll use the "v21.12" version of protoc, which is the latest today. You can change it for another version that you can found in the following link, even though it's not necessary: https://github.com/protocolbuffers/protobuf/releases
+> NOTE: We'll use the "v21.12" version of protoc, which is the latest today. You can change it for another version that you can find in the following link, even though it's not necessary: https://github.com/protocolbuffers/protobuf/releases
 
 **Unzip it**
 ```bash
@@ -41,11 +41,11 @@ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 
 # Generate protobufs
 
-An important advantage of using protobufs is the capacity to auto-generate the code in your preferred language, // fixme (incluso) in different languages. 
+A significant advantage of using protobufs is the capacity to auto-generate the code in your preferred language, even in different languages. 
 
 In this example, we're going to create a ```.proto``` file with the definition of the entity Comment. 
 
-Once we've created the file, we'll create the source code. In this case, I have chosen the golang plugin.
+Once we've created the file, we'll generate the source code. In this case, I have chosen the golang plugin.
 
 ```zsh
 protoc src/domain/*.proto \
@@ -176,9 +176,15 @@ Now, we run the application again and test it by calling the Retrieve endpoint:
 ```bash
 grpcurl -plaintext localhost:50051 CommentService.Retrieve
 {
-  "commets": [
+  "comments": [
     {
       "idComment": "1",
+      "idObject": 12,
+      "typeObject": "film",
+      "idUser": 20
+    },
+    {
+      "idComment": "2",
       "idObject": 12,
       "typeObject": "film",
       "idUser": 20
