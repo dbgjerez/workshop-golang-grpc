@@ -79,7 +79,7 @@ go get google.golang.org/grpc/reflection
 
 Once we have our project, we'll create a ```main.go``` file and implement our server. 
 
-The main file contains some important points. The first one is the struct to override the auto-generated code. This struct has been called sever and looks like that: 
+The main file contains some relevant points. The first one is the struct to override the auto-generated code. This struct has been called sever and looks like that: 
 
 ```go
 type server struct {
@@ -105,7 +105,10 @@ func main() {
 }
 ```
 
-Our main function implements some aspects. We see how to listen to a port, this port will be used by our application. Later, a new grpc server is started and the comment service is registered. 
+If we visualize the main.go file, we can watch the following points:
+* The port when the application is listening.
+* How the application starts the gRPC server.
+* The registration of the comment service. 
 
 The line with ```reflection.Register(s)``` enables the possibility to call for know the different functions and endpoints exposes our application. We will see it later. 
 
