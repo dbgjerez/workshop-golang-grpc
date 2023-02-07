@@ -110,9 +110,7 @@ If we visualize the main.go file, we can watch the following points:
 * How the application starts the gRPC server.
 * The registration of the comment service. 
 
-The line with ```reflection.Register(s)``` enables the possibility to call for know the different functions and endpoints exposes our application. We will see it later. 
-
-The last part starts the server and returns an error it isn't possible. 
+The line with ```reflection.Register(s)``` enables the exposition of the API, so you can call to know the different functions and endpoints that expose the application.
 
 # Play with the application
 
