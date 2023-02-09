@@ -48,8 +48,8 @@ In this example, we're going to create a ```.proto``` file with the definition o
 Once we've created the file, we'll generate the source code. In this case, I have chosen the golang plugin.
 
 ```zsh
-protoc src/domain/*.proto \
-    --go_out=. \
+protoc comment/grpc/*.proto \
+    --go_out=. \                
     --go_opt=paths=source_relative \
     --go-grpc_out=. \
     --go-grpc_opt=paths=source_relative
@@ -123,8 +123,10 @@ go run main.go
 To test the application, we can use the ```grpcurl``` tool. For example, I'm going to list the different endpoints with the following command:
 
 ```bash
-grpcurl -plaintext localhost:50051 list  
+grpcurl -plaintext localhost:50051 list
 CommentService
+HealthService
+InfoService
 grpc.reflection.v1alpha.ServerReflection
 ```
 
@@ -135,15 +137,14 @@ Our application responds in different endpoints, the first one is for our Commen
 If we continue calling we can see the different methods that contain our endpoint:
 
 ```bash
-grpcurl -plaintext localhost:50051 list CommentService                             
-CommentService.Insert
+grpcurl -plaintext localhost:50051 list CommentService  
 CommentService.Retrieve
 ```
 
 We've received two methods, also the same that we defined in de ```comment.proto``` file. So, it looks good. Now, I'll call the insert method:
 
 ```bash
-grpcurl -plaintext localhost:50051 CommentService.Insert 
+grpcurl -plaintext localhost:50051 CommentService.Retrieve 
 ERROR:
   Code: Unimplemented
   Message: method Insert not implemented
