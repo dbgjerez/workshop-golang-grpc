@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option go_package = "github.com/dbgjerez/workshop-golang-grpc/comment/grpc";
+
+message Info {
+    string name = 1;
+    string version = 2;
+}
+
+service InfoService {
+    rpc GetInfo(RetrieveInfo) returns (Info) {}
+}
+
+message RetrieveInfo {
+}

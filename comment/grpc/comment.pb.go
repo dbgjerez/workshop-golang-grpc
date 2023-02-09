@@ -99,53 +99,6 @@ func (x *Comment) GetComment() string {
 	return ""
 }
 
-type InsertResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	IdComment int32 `protobuf:"varint,1,opt,name=idComment,proto3" json:"idComment,omitempty"`
-}
-
-func (x *InsertResponse) Reset() {
-	*x = InsertResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_comment_grpc_comment_proto_msgTypes[1]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *InsertResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*InsertResponse) ProtoMessage() {}
-
-func (x *InsertResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_comment_grpc_comment_proto_msgTypes[1]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use InsertResponse.ProtoReflect.Descriptor instead.
-func (*InsertResponse) Descriptor() ([]byte, []int) {
-	return file_comment_grpc_comment_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *InsertResponse) GetIdComment() int32 {
-	if x != nil {
-		return x.IdComment
-	}
-	return 0
-}
-
 type RetrieveRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -158,7 +111,7 @@ type RetrieveRequest struct {
 func (x *RetrieveRequest) Reset() {
 	*x = RetrieveRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_comment_grpc_comment_proto_msgTypes[2]
+		mi := &file_comment_grpc_comment_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -171,7 +124,7 @@ func (x *RetrieveRequest) String() string {
 func (*RetrieveRequest) ProtoMessage() {}
 
 func (x *RetrieveRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_comment_grpc_comment_proto_msgTypes[2]
+	mi := &file_comment_grpc_comment_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -184,7 +137,7 @@ func (x *RetrieveRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RetrieveRequest.ProtoReflect.Descriptor instead.
 func (*RetrieveRequest) Descriptor() ([]byte, []int) {
-	return file_comment_grpc_comment_proto_rawDescGZIP(), []int{2}
+	return file_comment_grpc_comment_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *RetrieveRequest) GetIdObject() int32 {
@@ -212,7 +165,7 @@ type Comments struct {
 func (x *Comments) Reset() {
 	*x = Comments{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_comment_grpc_comment_proto_msgTypes[3]
+		mi := &file_comment_grpc_comment_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -225,7 +178,7 @@ func (x *Comments) String() string {
 func (*Comments) ProtoMessage() {}
 
 func (x *Comments) ProtoReflect() protoreflect.Message {
-	mi := &file_comment_grpc_comment_proto_msgTypes[3]
+	mi := &file_comment_grpc_comment_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -238,7 +191,7 @@ func (x *Comments) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Comments.ProtoReflect.Descriptor instead.
 func (*Comments) Descriptor() ([]byte, []int) {
-	return file_comment_grpc_comment_proto_rawDescGZIP(), []int{3}
+	return file_comment_grpc_comment_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *Comments) GetComments() []*Comment {
@@ -262,9 +215,6 @@ var file_comment_grpc_comment_proto_rawDesc = []byte{
 	0x63, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x69, 0x64, 0x55, 0x73, 0x65, 0x72, 0x18, 0x04, 0x20, 0x01,
 	0x28, 0x05, 0x52, 0x06, 0x69, 0x64, 0x55, 0x73, 0x65, 0x72, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x6f,
 	0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x6f, 0x6d,
-	0x6d, 0x65, 0x6e, 0x74, 0x22, 0x2e, 0x0a, 0x0e, 0x49, 0x6e, 0x73, 0x65, 0x72, 0x74, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x69, 0x64, 0x43, 0x6f, 0x6d, 0x6d,
-	0x65, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x69, 0x64, 0x43, 0x6f, 0x6d,
 	0x6d, 0x65, 0x6e, 0x74, 0x22, 0x4d, 0x0a, 0x0f, 0x52, 0x65, 0x74, 0x72, 0x69, 0x65, 0x76, 0x65,
 	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x69, 0x64, 0x4f, 0x62, 0x6a,
 	0x65, 0x63, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x69, 0x64, 0x4f, 0x62, 0x6a,
@@ -296,17 +246,16 @@ func file_comment_grpc_comment_proto_rawDescGZIP() []byte {
 	return file_comment_grpc_comment_proto_rawDescData
 }
 
-var file_comment_grpc_comment_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_comment_grpc_comment_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_comment_grpc_comment_proto_goTypes = []interface{}{
 	(*Comment)(nil),         // 0: Comment
-	(*InsertResponse)(nil),  // 1: InsertResponse
-	(*RetrieveRequest)(nil), // 2: RetrieveRequest
-	(*Comments)(nil),        // 3: Comments
+	(*RetrieveRequest)(nil), // 1: RetrieveRequest
+	(*Comments)(nil),        // 2: Comments
 }
 var file_comment_grpc_comment_proto_depIdxs = []int32{
 	0, // 0: Comments.comments:type_name -> Comment
-	2, // 1: CommentService.Retrieve:input_type -> RetrieveRequest
-	3, // 2: CommentService.Retrieve:output_type -> Comments
+	1, // 1: CommentService.Retrieve:input_type -> RetrieveRequest
+	2, // 2: CommentService.Retrieve:output_type -> Comments
 	2, // [2:3] is the sub-list for method output_type
 	1, // [1:2] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -333,18 +282,6 @@ func file_comment_grpc_comment_proto_init() {
 			}
 		}
 		file_comment_grpc_comment_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*InsertResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_comment_grpc_comment_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RetrieveRequest); i {
 			case 0:
 				return &v.state
@@ -356,7 +293,7 @@ func file_comment_grpc_comment_proto_init() {
 				return nil
 			}
 		}
-		file_comment_grpc_comment_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+		file_comment_grpc_comment_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Comments); i {
 			case 0:
 				return &v.state
@@ -375,7 +312,7 @@ func file_comment_grpc_comment_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_comment_grpc_comment_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

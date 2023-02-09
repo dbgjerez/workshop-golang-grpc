@@ -14,10 +14,6 @@ service CommentService {
     rpc Retrieve(RetrieveRequest) returns (Comments) {}
 }
 
-message InsertResponse {
-    int32 idComment = 1;
-}
-
 message RetrieveRequest {
     int32 idObject = 1;
     string typeObject = 2;

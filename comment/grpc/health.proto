@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option go_package = "github.com/dbgjerez/workshop-golang-grpc/comment/grpc";
+
+message Health {
+    string status = 1;
+}
+
+service HealthService {
+    rpc GetHealth(RetrieveHealth) returns (Health) {}
+}
+
+message RetrieveHealth {
+}
