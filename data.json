@@ -1,14 +1,30 @@
 [
     {
         "idComment": 1,
-        "idObject": 12,
+        "idObject": 1,
         "typeObject": "film",
-        "idUser": 20
+        "idUser": 2,
+        "comment": "Amazing..."
     },
     {
         "idComment": 2,
-        "idObject": 12,
+        "idObject": 1,
         "typeObject": "film",
-        "idUser": 20
+        "idUser": 1,
+        "comment": "One of the best movies of the all time"
+    },
+    {
+        "idComment": 3,
+        "idObject": 2,
+        "typeObject": "film",
+        "idUser": 1,
+        "comment": "Worse than the first one, although I recommend seeing it"
+    },
+    {
+        "idComment": 4,
+        "idObject": 1,
+        "typeObject": "book",
+        "idUser": 2,
+        "comment": "I am impressed with the history"
     }
 ]
