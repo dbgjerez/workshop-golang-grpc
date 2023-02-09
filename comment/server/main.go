@@ -25,8 +25,8 @@ func main() {
 	}
 
 	s := grpc.NewServer()
-	server := handler.NewServer()
-	c.RegisterCommentServiceServer(s, server)
+	commentHandler := handler.NewServer()
+	c.RegisterCommentServiceServer(s, commentHandler)
 	reflection.Register(s)
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)

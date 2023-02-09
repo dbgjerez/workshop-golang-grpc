@@ -8,26 +8,26 @@ import (
 	"github.com/dbgjerez/workshop-golang-grpc/comment/server/domain"
 )
 
-type Server struct {
+type CommentHandler struct {
 	c.UnimplementedCommentServiceServer
 	comments []*c.Comment
 }
 
-func NewServer() *Server {
+func NewServer() *CommentHandler {
 	store := domain.NewStore()
 	comments, err := store.ReadStore()
 	if err != nil {
 		log.Fatalf("Error reading the store: %v", err)
 	}
-	return &Server{comments: comments}
+	return &CommentHandler{comments: comments}
 }
 
-func (s *Server) Retrieve(ctx context.Context, rq *c.RetrieveRequest) (*c.Comments, error) {
+func (s *CommentHandler) Retrieve(ctx context.Context, rq *c.RetrieveRequest) (*c.Comments, error) {
 	log.Printf("Request: %s", rq.String())
 	return &c.Comments{Comments: s.FilterComments(rq.IdObject, rq.TypeObject)}, nil
 }
 
-func (s *Server) FilterComments(idObject int32, typeOject string) []*c.Comment {
+func (s *CommentHandler) FilterComments(idObject int32, typeOject string) []*c.Comment {
 	var res []*c.Comment
 	if idObject > 0 || typeOject != "" {
 		for _, c := range s.comments {
