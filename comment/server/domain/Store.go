@@ -8,6 +8,7 @@ import (
 	"os"
 
 	c "github.com/dbgjerez/workshop-golang-grpc/comment/grpc"
+	"github.com/dbgjerez/workshop-golang-grpc/comment/server/utils"
 )
 
 const (
@@ -20,7 +21,7 @@ type Store struct {
 }
 
 func NewStore() *Store {
-	path := GetEnv(ENV_CONFIG_JSON_LOCATION,
+	path := utils.GetEnv(ENV_CONFIG_JSON_LOCATION,
 		ENV_CONFIG_JSON_LOCATION_DEFAULT_VALUE)
 	return &Store{Path: path}
 }
@@ -45,11 +46,4 @@ func (store *Store) ReadStore() ([]*c.Comment, error) {
 		return []*c.Comment{}, errors.New(fmt.Sprintf("Error unmarshal the %s content: %v", store.Path, err))
 	}
 	return comments, nil
-}
-
-func GetEnv(key, defaultValue string) string {
-	if value, ok := os.LookupEnv(key); ok {
-		return value
-	}
-	return defaultValue
 }

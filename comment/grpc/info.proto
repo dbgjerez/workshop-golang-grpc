@@ -5,6 +5,7 @@ option go_package = "github.com/dbgjerez/workshop-golang-grpc/comment/grpc";
 message Info {
     string name = 1;
     string version = 2;
+    string buildTime = 3;
 }
 
 service InfoService {

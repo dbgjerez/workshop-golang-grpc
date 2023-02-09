@@ -13,7 +13,7 @@ type CommentHandler struct {
 	comments []*c.Comment
 }
 
-func NewServer() *CommentHandler {
+func NewCommentHandler() *CommentHandler {
 	store := domain.NewStore()
 	comments, err := store.ReadStore()
 	if err != nil {
