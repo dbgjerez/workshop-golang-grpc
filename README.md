@@ -141,7 +141,7 @@ grpcurl -plaintext localhost:50051 list CommentService
 CommentService.Retrieve
 ```
 
-We've received two methods, also the same that we defined in de ```comment.proto``` file. So, it looks good. Now, I'll call the insert method:
+We've received two methods, also the same that we defined in the ```comment.proto``` file. So, it looks good. Now, I'll call the insert method:
 
 ```bash
 grpcurl -plaintext localhost:50051 CommentService.Retrieve 

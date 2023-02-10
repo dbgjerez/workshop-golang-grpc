@@ -12,7 +12,7 @@ SERVICE_BUILD_TIME
 ### Build
 ```zsh
 SERVICE_NAME=comment-service
-VERSION=0.1
+VERSION=0.2
 SERVICE_BUILD_TIME=$(date '+%Y/%m/%d %H:%M:%S')
 podman build \
     --no-cache \

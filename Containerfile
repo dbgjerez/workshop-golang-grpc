@@ -15,6 +15,9 @@ COPY comment ./
 
 
 RUN go build -o /application server/main.go 
+RUN GRPC_HEALTH_PROBE_VERSION=v0.4.15 && \
+    wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
+    chmod +x /bin/grpc_health_probe
 
 ##
 ## Deploy
@@ -29,6 +32,7 @@ ENV SERVICE_BUILD_TIME=${buildTime}
 WORKDIR /
 
 COPY --from=build /application /application
+COPY --from=build /bin/grpc_health_probe /bin/grpc_health_probe
 COPY data.json /data.json
 
 EXPOSE 8080

@@ -4,13 +4,18 @@ import (
 	"context"
 
 	c "github.com/dbgjerez/workshop-golang-grpc/comment/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type HealthHandler struct {
-	c.UnsafeHealthServiceServer
+	c.UnimplementedHealthServer
 }
 
-func (hh *HealthHandler) GetHealth(context.Context, *c.RetrieveHealth) (*c.Health, error) {
-	// This application has not external dependencies as ddbb so we needn't check anymore
-	return &c.Health{Status: "UP"}, nil
+func (HealthHandler) Check(context.Context, *c.HealthCheckRequest) (*c.HealthCheckResponse, error) {
+	return &c.HealthCheckResponse{Status: c.HealthCheckResponse_SERVING}, nil
+}
+
+func (HealthHandler) Watch(*c.HealthCheckRequest, c.Health_WatchServer) error {
+	return status.Errorf(codes.Unimplemented, "method Watch not implemented")
 }
