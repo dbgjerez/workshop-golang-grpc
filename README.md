@@ -1,3 +1,5 @@
+[![Go Reference](https://pkg.go.dev/badge/github.com/dbgjerez/workshop-golang-grpc/comment.svg)](https://pkg.go.dev/github.com/dbgjerez/workshop-golang-grpc/comment)
+
 // TODO: explain the objective of this workshop
 
 # Installation

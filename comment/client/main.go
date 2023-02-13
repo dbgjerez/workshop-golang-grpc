@@ -33,7 +33,7 @@ func main() {
 	stream, err := client.Retrieve(ctx)
 	if err != nil {
 		if err := stream.Send(&c.RetrieveRequest{IdObject: int32(*idObj), TypeObject: *typeObj}); err != nil {
-			fmt.Errorf("send stream: %w", err)
+			log.Fatalf("send stream: %v", err)
 		}
 	}
 	comments, err := stream.CloseAndRecv()
