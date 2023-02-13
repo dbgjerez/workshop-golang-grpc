@@ -6,3 +6,6 @@
 
 # v0.2 - 10/02/2013
 - Implement https://github.com/grpc-ecosystem/grpc-health-probe for Kubernetes health check probe
+
+# v0.3 - 13/02/2013
+- Client side streaming
