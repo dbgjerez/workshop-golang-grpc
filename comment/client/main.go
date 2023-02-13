@@ -9,7 +9,6 @@ import (
 
 	c "github.com/dbgjerez/workshop-golang-grpc/comment/grpc"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 )
 
 var (
@@ -23,7 +22,7 @@ func main() {
 	flag.Parse()
 	addr := fmt.Sprintf("%s:%d", *host, *port)
 	log.Printf("Call to addr: %s", addr)
-	conn, err := grpc.Dial(addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial(addr, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
@@ -31,6 +30,12 @@ func main() {
 	client := c.NewCommentServiceClient(conn)
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	comments, err := client.Retrieve(ctx, &c.RetrieveRequest{IdObject: int32(*idObj), TypeObject: *typeObj})
+	stream, err := client.Retrieve(ctx)
+	if err != nil {
+		if err := stream.Send(&c.RetrieveRequest{IdObject: int32(*idObj), TypeObject: *typeObj}); err != nil {
+			fmt.Errorf("send stream: %w", err)
+		}
+	}
+	comments, err := stream.CloseAndRecv()
 	log.Println(comments)
 }

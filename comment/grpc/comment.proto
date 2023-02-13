@@ -11,7 +11,7 @@ message Comment {
 }
 
 service CommentService {
-    rpc Retrieve(RetrieveRequest) returns (Comments) {}
+    rpc Retrieve(stream RetrieveRequest) returns (Comments) {}
 }
 
 message RetrieveRequest {

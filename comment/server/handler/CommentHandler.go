@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"context"
+	"io"
 	"log"
 
 	c "github.com/dbgjerez/workshop-golang-grpc/comment/grpc"
@@ -22,9 +22,20 @@ func NewCommentHandler() *CommentHandler {
 	return &CommentHandler{comments: comments}
 }
 
-func (s *CommentHandler) Retrieve(ctx context.Context, rq *c.RetrieveRequest) (*c.Comments, error) {
-	log.Printf("Request: %s", rq.String())
-	return &c.Comments{Comments: s.FilterComments(rq.IdObject, rq.TypeObject)}, nil
+func (s *CommentHandler) Retrieve(stream c.CommentService_RetrieveServer) error {
+	var res []*c.Comment
+	for {
+		rq, err := stream.Recv()
+		if err == io.EOF {
+			return stream.SendAndClose(&c.Comments{
+				Comments: res,
+			})
+		}
+		if err != nil {
+			return err
+		}
+		res = append(res, s.FilterComments(rq.IdObject, rq.TypeObject)...)
+	}
 }
 
 func (s *CommentHandler) FilterComments(idObject int32, typeOject string) []*c.Comment {

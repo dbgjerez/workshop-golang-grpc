@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CommentServiceClient interface {
-	Retrieve(ctx context.Context, in *RetrieveRequest, opts ...grpc.CallOption) (*Comments, error)
+	Retrieve(ctx context.Context, opts ...grpc.CallOption) (CommentService_RetrieveClient, error)
 }
 
 type commentServiceClient struct {
@@ -33,20 +33,45 @@ func NewCommentServiceClient(cc grpc.ClientConnInterface) CommentServiceClient {
 	return &commentServiceClient{cc}
 }
 
-func (c *commentServiceClient) Retrieve(ctx context.Context, in *RetrieveRequest, opts ...grpc.CallOption) (*Comments, error) {
-	out := new(Comments)
-	err := c.cc.Invoke(ctx, "/CommentService/Retrieve", in, out, opts...)
+func (c *commentServiceClient) Retrieve(ctx context.Context, opts ...grpc.CallOption) (CommentService_RetrieveClient, error) {
+	stream, err := c.cc.NewStream(ctx, &CommentService_ServiceDesc.Streams[0], "/CommentService/Retrieve", opts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &commentServiceRetrieveClient{stream}
+	return x, nil
+}
+
+type CommentService_RetrieveClient interface {
+	Send(*RetrieveRequest) error
+	CloseAndRecv() (*Comments, error)
+	grpc.ClientStream
+}
+
+type commentServiceRetrieveClient struct {
+	grpc.ClientStream
+}
+
+func (x *commentServiceRetrieveClient) Send(m *RetrieveRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *commentServiceRetrieveClient) CloseAndRecv() (*Comments, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(Comments)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 // CommentServiceServer is the server API for CommentService service.
 // All implementations must embed UnimplementedCommentServiceServer
 // for forward compatibility
 type CommentServiceServer interface {
-	Retrieve(context.Context, *RetrieveRequest) (*Comments, error)
+	Retrieve(CommentService_RetrieveServer) error
 	mustEmbedUnimplementedCommentServiceServer()
 }
 
@@ -54,8 +79,8 @@ type CommentServiceServer interface {
 type UnimplementedCommentServiceServer struct {
 }
 
-func (UnimplementedCommentServiceServer) Retrieve(context.Context, *RetrieveRequest) (*Comments, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Retrieve not implemented")
+func (UnimplementedCommentServiceServer) Retrieve(CommentService_RetrieveServer) error {
+	return status.Errorf(codes.Unimplemented, "method Retrieve not implemented")
 }
 func (UnimplementedCommentServiceServer) mustEmbedUnimplementedCommentServiceServer() {}
 
@@ -70,22 +95,30 @@ func RegisterCommentServiceServer(s grpc.ServiceRegistrar, srv CommentServiceSer
 	s.RegisterService(&CommentService_ServiceDesc, srv)
 }
 
-func _CommentService_Retrieve_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RetrieveRequest)
-	if err := dec(in); err != nil {
+func _CommentService_Retrieve_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(CommentServiceServer).Retrieve(&commentServiceRetrieveServer{stream})
+}
+
+type CommentService_RetrieveServer interface {
+	SendAndClose(*Comments) error
+	Recv() (*RetrieveRequest, error)
+	grpc.ServerStream
+}
+
+type commentServiceRetrieveServer struct {
+	grpc.ServerStream
+}
+
+func (x *commentServiceRetrieveServer) SendAndClose(m *Comments) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *commentServiceRetrieveServer) Recv() (*RetrieveRequest, error) {
+	m := new(RetrieveRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(CommentServiceServer).Retrieve(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/CommentService/Retrieve",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CommentServiceServer).Retrieve(ctx, req.(*RetrieveRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return m, nil
 }
 
 // CommentService_ServiceDesc is the grpc.ServiceDesc for CommentService service.
@@ -94,12 +127,13 @@ func _CommentService_Retrieve_Handler(srv interface{}, ctx context.Context, dec 
 var CommentService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "CommentService",
 	HandlerType: (*CommentServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
+	Methods:     []grpc.MethodDesc{},
+	Streams: []grpc.StreamDesc{
 		{
-			MethodName: "Retrieve",
-			Handler:    _CommentService_Retrieve_Handler,
+			StreamName:    "Retrieve",
+			Handler:       _CommentService_Retrieve_Handler,
+			ClientStreams: true,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
 	Metadata: "comment/grpc/comment.proto",
 }
