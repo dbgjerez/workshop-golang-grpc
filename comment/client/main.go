@@ -32,9 +32,10 @@ func main() {
 	defer cancel()
 	stream, err := client.Retrieve(ctx)
 	if err != nil {
-		if err := stream.Send(&c.RetrieveRequest{IdObject: int32(*idObj), TypeObject: *typeObj}); err != nil {
-			log.Fatalf("send stream: %v", err)
-		}
+		log.Fatalf("send stream: %v", err)
+	}
+	if err := stream.Send(&c.RetrieveRequest{IdObject: int32(*idObj), TypeObject: *typeObj}); err != nil {
+		log.Fatalf("send stream: %v", err)
 	}
 	comments, err := stream.CloseAndRecv()
 	log.Println(comments)
