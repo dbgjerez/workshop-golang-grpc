@@ -89,21 +89,7 @@ type server struct {
 
 As we can see, the struct uses the unimplemented struct. Now, we are going to create the server in the main function, registering the server struct:
 
-```go
-func main() {
-    flag.Parse()
-    lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
-    if err != nil {
-        log.Fatalf("failed to listen: %v", err)
-    }
-    s := grpc.NewServer()
-    domain.RegisterCommentServiceServer(s, &server{})
-    reflection.Register(s)
-    if err := s.Serve(lis); err != nil {
-        log.Fatalf("failed to serve: %v", err)
-    }
-}
-```
+https://github.com/dbgjerez/workshop-golang-grpc/blob/57cc954ff7a1066155a5637134dd6c5509902f2d/comment/client/main.go#L22-L36
 
 If we visualize the main.go file, we can watch the following points:
 * The port when the application is listening.
